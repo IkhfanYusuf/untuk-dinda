@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        .main {
+            height: 100vh;
+        }
+    </style>
+    <title>Untuk Dinda</title>
+</head>
+
+<body>
+
+    <div class="main w-100 d-flex flex-column justify-content-center align-items-center">
+        <h5 class="mb-3">Dinda Ayu Ningtyas</h5>
+        <button id="tap" class="btn btn-primary">Tap deh...</button>
+    </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const msgSuccess =
+            'Hai Ikhfan yg lagi kurang baik perasaannya, tau ga? Dinda kesayanganmu udh maafin salahmu loh, jangan bikin dia kecewa lagi ya Fan!'
+        const msgFail =
+            'Fan, aku juga ikut sedih, Dinda belum maafin kamu, tetep semangat ya, jangan kendor sampe dia mau maafin kamu.'
+
+        const sendMail = async (msg) => {
+
+            try {
+                const sendData = await fetch(
+                    'https://contact-form-api-ikhfan.herokuapp.com/send', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: "Email Bot",
+                            email: "ikhfan.yusuf@gmail.com",
+                            message: msg,
+                        })
+                    })
+            } catch (err) {
+                console.log(err)
+            }
+
+
+        }
+
+        document.getElementById("tap").addEventListener("click", function () {
+            Swal.fire({
+                title: 'My Sweety!<br> Dinda Ayu Ningtyas',
+                text: 'Jangan marah lagi ya. Mungkin aku ngga peka bgt, jujur gatau salah apa, tapi aku bisa ngerasain kalau ada banyak salahku yg bikin kecewa. Maafin ya, gatau bakal percaya apa engga, yang pasti sayang banget aku loh sama adek.',
+                imageUrl: 'https://blogger.googleusercontent.com/img/a/AVvXsEhAwU-di8qsWnJpJNLm5RM4iIilAoNR1eDzT68N-hk2M2JwFKAbLQ72N-YVH2dhbjrsFzHf3QaSZh2J7puq4X0Jabe5knLOYa6OYVyJNyTVDX-v1eisDFwZiZVdyMdboqjAdXp802qjVc23_w054DX34CgpHyKGkejqlbtBA4HFQJKLijoxTNwVXGz0mw=s16000',
+                imageAlt: 'Custom image',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, dimaafin.',
+                cancelButtonText: 'Tar dulu ya.'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    sendMail(msgSuccess)
+                    Swal.fire(
+                        'Yeay, makasih Dinda :)',
+                        'Aku selaku bot email yang diciptakan Ikhfan turut seneng deh, aku sampein kabar ini dulu ke Ikhfan ya, pasti dia seneng bgt.',
+                        'success'
+                    )
+                } else {
+                    sendMail(msgFail)
+                    Swal.fire(
+                        'Hiks, Dindaaaa :\')',
+                        'Aku selaku bot email yang diciptakan Ikhfan ikut sedih kamu belum bisa maafin dia, aku sampein kabar ini dulu ke Ikhfan ya, semoga dia tetep semangat buat minta maaf ke kamu sampai kamu maafin dia.',
+                        'warning'
+                    )
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>
